@@ -1,1 +1,3 @@
-#Bazy danych
+# Bazy danych
+## Tabele do zrobienia
+* 
