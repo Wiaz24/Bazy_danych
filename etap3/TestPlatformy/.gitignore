@@ -1,0 +1,15 @@
+﻿
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+*.user
+*.vscode/
+*.sln.ide
+.vs/
+.editorconfig
+#appsettings.json
+#appsettings.Development.json
+#appsettings.Production.json
+*.log
