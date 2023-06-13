@@ -2,7 +2,7 @@
 
 namespace Platformy_Programowania_1.Services.Interfaces
 {
-    public class IDailyService
+    public interface IDailyService
     {
             Task<int> CreateDaily(DailyData daily);
             Task<int> UpdateDaily(DailyData daily);
