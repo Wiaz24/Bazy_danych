@@ -16,7 +16,7 @@ namespace Platformy_Programowania_1.Services
         {
             _dbContext.Daily.Add(daily);
             await _dbContext.SaveChangesAsync();
-            return daily.ID;
+            return daily.ID_rekordu;
         }
         public async Task<int> UpdateDaily(DailyData daily)
         {
