@@ -87,6 +87,6 @@ public class CompanyStockController : Controller
 
     public async Task<IActionResult> Index()
     {
-        return View(await _context.Stocks.ToListAsync());
+        return View();
     }
 }

@@ -4,7 +4,7 @@ using Platformy_Programowania_1.Services.Interfaces;
 
 namespace Platformy_Programowania_1.Services
 {
-    public class OrderService
+    public class OrderService : IOrderService
     {
         private readonly AppDbContext _dbContext;
         public OrderService(AppDbContext dbContext)

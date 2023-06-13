@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using Newtonsoft.Json;
+using Platformy_Programowania_1.Models;
 using Platformy_Programowania_1.Services.Interfaces;
 using System.Dynamic;
 
@@ -7,20 +10,36 @@ namespace Platformy_Programowania_1.Controllers
 {
     public class StockController : Controller
     {
-        private readonly IStockService _stockService;
+        private readonly IDailyService _dailyService;
+        private readonly IYearlyService _yearlyService;
         private readonly ICompanyService _companyService;
-        public StockController(ICompanyService companyService, IStockService stockService)
+        public StockController(ICompanyService companyService, IDailyService dailyService, IYearlyService yearlyService)
         {
-            _stockService = stockService;
+            _dailyService = dailyService;
+            _yearlyService = yearlyService; 
             _companyService = companyService;
+
         }
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
-            dynamic mymodel = new ExpandoObject();
-            mymodel.Companies = _companyService.GetCompanies();
-            mymodel.Stocks = _stockService.GetStocks();
-            ViewBag.CompanyList = new SelectList(mymodel.Companies, "ID_firmy", "Nazwa_firmy");
-            return View(mymodel);
+            //ViewBag.DailyData = TempData["DailyData"];
+            //ViewBag.YearlyData = TempData["YearlyData"];
+            ////if (ViewBag.DailyData != null) Console.WriteLine(ViewBag.DailyData);
+            //ViewBag.YearlyData = JsonConvert.SerializeObject(TempData["YearlyData"]);
+            return View(await _companyService.GetCompanies());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> GetData(int idFirmy)
+        {
+            var dailyDatas = await _dailyService.GetDailysByCompanyId(idFirmy);
+            var yearlyDatas = await _yearlyService.GetYearlysByCompanyId(idFirmy);
+            string dailyDatasJson = JsonConvert.SerializeObject(dailyDatas);
+            string yearlyDatasJson = JsonConvert.SerializeObject(yearlyDatas);
+            TempData["DailyData"] = dailyDatasJson;
+            TempData["YearlyData"] = yearlyDatasJson;
+            return RedirectToAction("Index");
         }
     }
 }

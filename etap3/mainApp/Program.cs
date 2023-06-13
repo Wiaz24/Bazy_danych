@@ -12,7 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IUserService, UserService>(); //dependency injection for user service
 builder.Services.AddScoped<ICompanyService, CompanyService>();
-//builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IDailyService, DailyService>();
+builder.Services.AddScoped<IYearlyService, YearlyService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
