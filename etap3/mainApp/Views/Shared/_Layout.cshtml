@@ -41,6 +41,13 @@
                     <li class="nav-item" data-bss-hover-animate="pulse">
                         <a class="nav-link active" asp-area=""  asp-controller="CompanyStock" asp-action="Index">Stock</a>
                     </li>
+                    
+                    @if (User.Identity != null && User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item" data-bss-hover-animate="pulse">
+                                <a class="nav-link active" asp-area="" asp-controller="Company" asp-action="Index">Companies</a>
+                        </li>
+                    }
                 </ul>
                 @if (User.Identity != null && User.Identity.IsAuthenticated)
                 {

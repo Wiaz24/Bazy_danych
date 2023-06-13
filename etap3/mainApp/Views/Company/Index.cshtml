@@ -1,0 +1,35 @@
+﻿@model List<Platformy_Programowania_1.Models.Company>
+<div>
+    <div class="text-center">
+        <a class="btn btn-primary" role="button" style="margin-right: 11px;" asp-area="" asp-controller="Company" asp-action="Add">
+        Dodaj firmę
+        </a>
+        <table class="table table-bordered table-responsive table-hover" style="color: white">
+            <tr>
+                <th> ID firmy </th>
+                <th> Nazwa firmy </th>
+                <th> Sektor</th>
+                <th> Ilosc dostepnych akcji</th>
+                <th> </th>
+            </tr>
+
+            @foreach (var company in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => company.ID_firmy)</td>
+                    <td>@Html.DisplayFor(modelItem => company.Nazwa_firmy)</td>
+                    <td>@Html.DisplayFor(modelItem => company.Sektor)</td>
+                    <td>@Html.DisplayFor(modelItem => company.Ilosc_dostepnych_akcji)</td>
+                    <td>
+                        <!-- Przycisk usuwający firmę -->
+                    @Html.ActionLink("Usuń", "Delete", new { id = company.ID_firmy }, new { @class = "btn btn-danger btn-sm" })
+                        <!-- Przycisk edytujący firmę -->
+                    @Html.ActionLink("Edytuj", "Update", new { id = company.ID_firmy }, new { @class = "btn btn-primary btn-sm" })
+                    </td>
+                
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>

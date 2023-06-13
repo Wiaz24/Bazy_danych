@@ -10,9 +10,18 @@ namespace Platformy_Programowania_1.Services
 {
     public class UserService : IUserService
     {
-        public int Save(User newUser)
+        private readonly AppDbContext _dbContext;
+        public UserService(AppDbContext dbContext)
         {
-            throw new NotImplementedException();
+            _dbContext = dbContext;
+        }
+        public float GetBalanceById(string id)
+        {
+            return _dbContext.Users.Find(id).Balance;
+        }
+        public int GetAccountTypeById(string id)
+        {
+            return _dbContext.Users.Find(id).AccountType;
         }
     }
 }
