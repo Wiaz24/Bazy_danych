@@ -4,7 +4,7 @@ namespace Platformy_Programowania_1.Services.Interfaces
 {
     public interface IUserService
     {
-        //Saves new user to database during registration
-        int Save(User newUser);
+        float GetBalanceById(string id);
+        int GetAccountTypeById(string id);
     }
 }

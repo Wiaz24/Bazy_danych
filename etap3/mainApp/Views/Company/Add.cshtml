@@ -1,0 +1,17 @@
+﻿@model Platformy_Programowania_1.Models.Company
+
+}
+<div>
+    <div class="text-center">
+        <h1 class="display-4">Firmy</h1>
+
+        @using (Html.BeginForm("Add", "Company", FormMethod.Post))
+        {
+            @Html.ValidationSummary()
+            @Html.TextBoxFor(x => x.Nazwa_firmy, new { @class = "form-control", @placeholder="Nazwa firmy" })
+            @Html.TextBoxFor(x => x.Sektor, new { @class = "form-control", @placeholder="Sektor" })
+            @Html.TextBoxFor(x => x.Ilosc_dostepnych_akcji, new { @class = "form-control", @placeholder="Ilosc dostepnych akcji" })
+            <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit">Dodaj firmę</button></div>
+        }
+    </div>
+</div>
