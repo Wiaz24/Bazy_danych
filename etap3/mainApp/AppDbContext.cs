@@ -13,7 +13,11 @@ namespace Platformy_Programowania_1
         public DbSet<Company> Companies { get; set; }
         public DbSet<DailyData> Daily { get; set; }
         public DbSet<YearlyData> Yearly { get; set; }
-        //public DbSet<Favourite> Favourites { get; set; }
+<<<<<<< HEAD
+        public DbSet<Favourite> Favourites { get; set; }
+=======
+        
+>>>>>>> 3411c1a81527d42f7aa13990e192e9835687e598
         public DbSet<Order> Orders { get; set; }
         public AppDbContext() : base() { }
 

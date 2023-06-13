@@ -39,6 +39,7 @@ namespace Platformy_Programowania_1.Services
         {
             return _dbContext.Daily.Find(id);
         }
+<<<<<<< HEAD
         public async Task<IEnumerable<DailyData>> GetDailysByCompanyId(int id)
         {
             return await _dbContext.Daily
@@ -47,3 +48,11 @@ namespace Platformy_Programowania_1.Services
         }
     }
 }
+=======
+        public async Task<IEnumerable<DailyData>> GetDailys()
+        {
+            return await _dbContext.Daily.ToListAsync();
+        }
+    }
+}
+>>>>>>> 3411c1a81527d42f7aa13990e192e9835687e598
