@@ -2,9 +2,9 @@
 {
     public class YearlyData
     {
-        public int Id { get; set; }
-        public int CompanyId { get; set; }
-        public float Price { get; set; }
-        public DateTime Date { get; set; }
+        public int ID_rekordu { get; set; }
+        public int ID_firmy { get; set; }
+        public float Cena { get; set; }
+        public DateTime Dzien { get; set; }
     }
 }
