@@ -1,0 +1,15 @@
+﻿@model dynamic
+
+<div class="dropdown">
+    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
+        Fi
+    </button>
+    <ul class="dropdown-menu">
+        @foreach (Company company in Model.Companies)
+        {
+            <li><a class="dropdown-item" href="#">company</a></li>
+        }
+    </ul>
+</div>
+
+<div id="chartContainer" style="height: 450px; width: 100%;"></div>
