@@ -6,7 +6,7 @@ namespace Platformy_Programowania_1.Services.Interfaces
     {
         Task<string> CreateFavourite(Favourite daily);
         Task<int> UpdateFavourite(Favourite daily);
-        Task<int> DeleteFavourite(int? id);
+        Task<int> DeleteFavourite(string? user_id, int? comp_id);
         Favourite GetFavouriteByUserId(string user_id);
         Task<IEnumerable<Favourite>> GetFavourites();
     }

@@ -23,12 +23,14 @@ namespace Platformy_Programowania_1.Services
             _dbContext.Favourites.Update(favourite);
             return await _dbContext.SaveChangesAsync();
         }
-        public async Task<int> DeleteFavourite(int? id)
+        public async Task<int> DeleteFavourite(string? user_id, int? comp_id);
         {
-            if (id == null)
+            if (comp_id == null)
                 return 0;
+            if(user_id==null)
+                return0;
 
-            var favourite = await _dbContext.Favourites.FindAsync(id);
+            var favourite = await _dbContext.Favourites.FindAsync(user_id, comp_id);
             if (favourite == null)
                 return 0;
 
