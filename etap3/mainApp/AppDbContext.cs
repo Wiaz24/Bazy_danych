@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Bcpg;
 using Platformy_Programowania_1.Models;
+using System.Reflection.Emit;
 
 
 namespace Platformy_Programowania_1
@@ -13,11 +14,7 @@ namespace Platformy_Programowania_1
         public DbSet<Company> Companies { get; set; }
         public DbSet<DailyData> Daily { get; set; }
         public DbSet<YearlyData> Yearly { get; set; }
-<<<<<<< HEAD
-        public DbSet<Favourite> Favourites { get; set; }
-=======
-        
->>>>>>> 3411c1a81527d42f7aa13990e192e9835687e598
+        //public DbSet<Favourite> Favourites { get; set; }
         public DbSet<Order> Orders { get; set; }
         public AppDbContext() : base() { }
 
@@ -38,6 +35,10 @@ namespace Platformy_Programowania_1
 
             builder.Entity<YearlyData>()
                 .ToTable("historia_roczna");
+
+            //builder.Entity<Favourite>()
+            //    .ToTable("historia_roczna")
+            //    .HasKey(nameof(Favourite.CompanyID), nameof(Favourite.UserID));
         }
     }
 }

@@ -55,13 +55,13 @@
                     }
                 }
             });
-        //$.getJSON("https://canvasjs.com/data/docs/btcusd2018.json", function (data) {
-        //    for (var i = 0; i < data.length; i++) {
-        //        dataPoints.push({ x: new Date(data[i].date), y: Number(data[i].close) });
-        //    }
-            for (var i = 0; i < obj.length; i++) {
-                dataPoints.push({ x: new Date(obj[i].Dzien), y: Number(obj[i].Cena) });
+        $.getJSON("https://canvasjs.com/data/docs/btcusd2018.json", function (data) {
+            for (var i = 0; i < data.length; i++) {
+                dataPoints.push({ x: new Date(data[i].date), y: Number(data[i].close) });
             }
+            //for (var i = 0; i < obj.length; i++) {
+            //    dataPoints.push({ x: new Date(obj[i].Dzien), y: Number(obj[i].Cena) });
+            //}
             stockChart.render();
         });
     }

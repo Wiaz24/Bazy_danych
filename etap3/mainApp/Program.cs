@@ -15,6 +15,7 @@ builder.Services.AddScoped<ICompanyService, CompanyService>();
 builder.Services.AddScoped<IDailyService, DailyService>();
 builder.Services.AddScoped<IYearlyService, YearlyService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+//builder.Services.AddScoped<IFavouritesService, FavouriteService>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
