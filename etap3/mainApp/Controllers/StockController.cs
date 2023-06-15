@@ -23,23 +23,20 @@ namespace Platformy_Programowania_1.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            //ViewBag.DailyData = TempData["DailyData"];
-            //ViewBag.YearlyData = TempData["YearlyData"];
-            ////if (ViewBag.DailyData != null) Console.WriteLine(ViewBag.DailyData);
-            //ViewBag.YearlyData = JsonConvert.SerializeObject(TempData["YearlyData"]);
             return View(await _companyService.GetCompanies());
         }
 
         [HttpPost]
-        public async Task<IActionResult> GetData(int idFirmy)
+        public async Task<IActionResult> GetData(int ID_firmy)
         {
-
-            var dailyDatas = await _dailyService.GetDailysByCompanyId(idFirmy);
-            var yearlyDatas = await _yearlyService.GetYearlysByCompanyId(idFirmy);
+            var dailyDatas = await _dailyService.GetDailysByCompanyId(ID_firmy);
+            var yearlyDatas = await _yearlyService.GetYearlysByCompanyId(ID_firmy);
+            var company = _companyService.GetCompanyById(ID_firmy);
             string dailyDatasJson = JsonConvert.SerializeObject(dailyDatas);
             string yearlyDatasJson = JsonConvert.SerializeObject(yearlyDatas);
             TempData["DailyData"] = dailyDatasJson;
             TempData["YearlyData"] = yearlyDatasJson;
+            TempData["Title"] = company.Nazwa_firmy;
             return RedirectToAction("Index");
         }
     }
