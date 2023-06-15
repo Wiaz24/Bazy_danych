@@ -1,20 +1,33 @@
 ﻿@model List<Platformy_Programowania_1.Models.Company>
 <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 <script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.stock.min.js"></script>
-<script type="text/javascript">
-
 @{
-    string razorData = (string)(TempData["YearlyData"]);
+    string yearlyData = (string)(TempData["YearlyData"]);
+    string dailyData = (string)(TempData["DailyData"]);
 }
+<script type="text/javascript">
+    window.onload = function () {
+    var jsonYearlyData = '@Html.Raw(yearlyData)';
+    var jsonDailyData = '@Html.Raw(dailyData)';
 
-window.onload = function () {
-    var jsonData = '@Html.Raw(razorData)';
     // Parsowanie danych z ciągu tekstowego JSON
-    var data = JSON.parse(jsonData);
-    var dataPoints = [], y = 0, x = new Date(2016, 0, 02).getTime(), oneDayInms = (24 * 60 * 60 * 1000);
-    var stockChart = new CanvasJS.StockChart("stockChartContainer", {
-        backgroundColor: "#2d2c38",
-        height: 800,
+    var yearlyData = JSON.parse(jsonYearlyData);
+    var dailyData = JSON.parse(jsonDailyData);
+
+    var yearlyDataPoints = [];
+    var dailyDataPoints = [];
+
+    for (var i = 0; i < yearlyData.length; i++) {
+        yearlyDataPoints.push({ x: new Date(yearlyData[i].Dzien), y: Number(yearlyData[i].Cena) });
+    }
+
+    for (var i = 0; i < dailyData.length; i++) {
+        dailyDataPoints.push({ x: new Date(dailyData[i].Dzien), y: Number(dailyData[i].Cena) });
+    }
+
+    var yearlyChart = new CanvasJS.StockChart("yearlyChart", {
+        backgroundColor: "#27262e",
+        height: 600,
         title: {
             text: '@Html.Raw((string)(TempData["Title"]))',
             fontSize: 30,
@@ -29,7 +42,7 @@ window.onload = function () {
             data: [{
                 xValueType: "dateTime",
                 type: "line",
-                dataPoints: dataPoints
+                dataPoints: yearlyDataPoints
             }]
         }],
         rangeSelector: {
@@ -40,10 +53,36 @@ window.onload = function () {
         }
     });
 
-    for (var i = 0; i < data.length; i++) {
-        dataPoints.push({ x: new Date(data[i].Dzien), y: Number(data[i].Cena) });
-    }
-    stockChart.render();
+    var dailyChart = new CanvasJS.StockChart("dailyChart", {
+        backgroundColor: "#27262e",
+        height: 600,
+        title: {
+            text: '@Html.Raw((string)(TempData["Title"]))',
+            fontSize: 30,
+            fontColor: "white",
+            padding: 5,
+            borderThickness: 4,
+            cornerRadius: 8,
+            borderColor: "#3763f4",
+            backgroundColor: "#27262e",
+        },
+        charts: [{
+            data: [{
+                xValueType: "dateTime",
+                type: "line",
+                dataPoints: dailyDataPoints
+            }]
+        }],
+        rangeSelector: {
+            buttons: [],
+            inputFields: {
+                enabled: false
+            }
+        }
+    });
+
+    yearlyChart.render();
+    dailyChart.render();
 }
 </script>
 
@@ -51,11 +90,30 @@ window.onload = function () {
     @using (Html.BeginForm("GetData", "Stock", FormMethod.Post))
     {
         @Html.DropDownList("ID_firmy", new SelectList(Model, "ID_firmy", "Nazwa_firmy"), "Wybierz firmę", new { @class = "form-control" })
-        <button class="btn btn-primary" type="submit">Pobierz dane</button>
+        <div class="col text-center">
+            <button class="btn btn-primary shadow" role="button" type="submit">Pobierz dane</button>
+        </div>
     }
+</div>
 
-    
-</div>
-<div class="container-fluid text-secondary" style="height: 50px; width:90%;">
-    <div id="stockChartContainer"></div>
-</div>
+@if (TempData["Title"] != null)
+{
+    <div class="container-fluid text-secondary" style="width:90%;">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item" role="presentation"><a class="nav-link active" role="tab" data-bs-toggle="tab" href="#tab-1">Tab 1</a></li>
+            <li class="nav-item" role="presentation"><a class="nav-link" role="tab" data-bs-toggle="tab" href="#tab-2">Tab 2</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="tab-1" class="tab-pane active" role="tabpanel">
+                <div class="container-fluid text-secondary">
+                    <div id="yearlyChart">
+                    </div>
+                </div>
+            </div>
+            <div id="tab-2" class="tab-pane" role="tabpanel">
+                
+            </div>
+        </div>
+    </div>
+}
+
