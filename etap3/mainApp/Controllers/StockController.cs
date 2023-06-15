@@ -33,6 +33,7 @@ namespace Platformy_Programowania_1.Controllers
         [HttpPost]
         public async Task<IActionResult> GetData(int idFirmy)
         {
+
             var dailyDatas = await _dailyService.GetDailysByCompanyId(idFirmy);
             var yearlyDatas = await _yearlyService.GetYearlysByCompanyId(idFirmy);
             string dailyDatasJson = JsonConvert.SerializeObject(dailyDatas);

@@ -42,7 +42,7 @@ namespace Platformy_Programowania_1.Services
         public async Task<IEnumerable<YearlyData>> GetYearlysByCompanyId(int id)
         {
             return await _dbContext.Yearly
-                .Where(h => h.ID_firmy == id)
+                //.Where(h => h.ID_firmy == id)
                 .ToListAsync();
         }
     }

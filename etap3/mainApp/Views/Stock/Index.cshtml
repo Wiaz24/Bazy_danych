@@ -5,11 +5,66 @@
     @Html.DropDownList("SelectedCompanyId", new SelectList(Model, "ID_firmy", "Nazwa_firmy"), "Wybierz firmę", new { @class = "form-control" })
     <button type="submit">Pobierz dane</button>
 }
+@TempData["YearlyData"]
+<canvas id="myChart" width="400" height="400"></canvas>
 
-<script type="text/javascript">
-    function plotYearlyData(data) {
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+@if (TempData["YearlyData"] != null)
+{
+    <script>
+        // Ciąg tekstowy JSON z danymi
+        //var jsonData = '[{"label":"Red","value":12},{"label":"Blue","value":19},{"label":"Yellow","value":3},{"label":"Green","value":5},{"label":"Purple","value":2},{"label":"Orange","value":3}]';
+        //var jsonData = "[{\"ID_rekordu\":1,\"ID_firmy\":1,\"Cena\":222.2,\"Dzien\":\"2023-01-01T00:00:00\"},{\"ID_rekordu\":2,\"ID_firmy\":1,\"Cena\":223.7,\"Dzien\":\"2023-01-02T00:00:00\"}]"
+
+        var jsonData = "@TempData["YearlyData"]";
+        // Parsowanie danych z ciągu tekstowego JSON
+        var data = JSON.parse(jsonData);
+
+        // Przygotowanie danych do wykresu
+        var labels = data.map(function(item) {
+        return item.Dzien;
+        });
+
+        var values = data.map(function(item) {
+        return item.Cena;
+        });
+
+        var chartData = {
+        labels: labels,
+        datasets:
+        [{
+        label: 'Dataset',
+        data: values,
+        backgroundColor: 'rgba(0, 123, 255, 0.5)',
+        borderColor: 'rgba(0, 123, 255, 1)',
+        borderWidth: 1
+        }]
+        };
+
+        // Utworzenie i konfiguracja wykresu
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+        type: 'line',
+        data: chartData,
+        options:
+        {
+        responsive: true,
+        scales:
+        {
+        y:
+        {
+        beginAtZero: true
+        }
+        }
+        }
+        });
+
+
+    </script>
+}
+@*<script type="text/javascript">
+    function plotYearlyData(mydata) {
         var dataPoints = [];
-        var obj = JSON.parse(data);
         var stockChart = new CanvasJS.StockChart("chartContainer",
             {
                 backgroundColor: "#2d2c38",
@@ -59,18 +114,15 @@
             for (var i = 0; i < data.length; i++) {
                 dataPoints.push({ x: new Date(data[i].date), y: Number(data[i].close) });
             }
-            //for (var i = 0; i < obj.length; i++) {
-            //    dataPoints.push({ x: new Date(obj[i].Dzien), y: Number(obj[i].Cena) });
-            //}
             stockChart.render();
         });
     }
-
+    
     window.onload = function () {
-        var data = @TempData["YearlyData"];
-        plotYearlyData(data);
+        var mydata = @TempData["YearlyData"];
+        plotYearlyData(mydata);
     };
         
-</script>
+</script>*@
 
-<div id="chartContainer" style="height: 450px; width: 100%;"></div>
+@*<div id="chartContainer" style="height: 450px; width: 100%;"></div>*@
