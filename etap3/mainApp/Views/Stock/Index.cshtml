@@ -22,7 +22,7 @@
     }
 
     for (var i = 0; i < dailyData.length; i++) {
-        dailyDataPoints.push({ x: new Date(dailyData[i].Dzien), y: Number(dailyData[i].Cena) });
+        dailyDataPoints.push({ x: new Date(dailyData[i].Godzina), y: Number(dailyData[i].Cena) });
     }
 
     var yearlyChart = new CanvasJS.StockChart("yearlyChart", {
@@ -111,7 +111,10 @@
                 </div>
             </div>
             <div id="tab-2" class="tab-pane" role="tabpanel">
-                
+                <div class="container-fluid text-secondary">
+                    <div id="dailyChart">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
