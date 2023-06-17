@@ -22,21 +22,22 @@
     }
 
     for (var i = 0; i < dailyData.length; i++) {
-        dailyDataPoints.push({ x: new Date(dailyData[i].Godzina), y: Number(dailyData[i].Cena) });
+        dailyDataPoints.push({ x: new Date(dailyData[i].Dzien), y: Number(dailyData[i].Cena) });
     }
 
     var yearlyChart = new CanvasJS.StockChart("yearlyChart", {
         backgroundColor: "#27262e",
         height: 600,
+        animationEnabled: true,
         title: {
             text: '@Html.Raw((string)(TempData["Title"]))',
             fontSize: 30,
             fontColor: "white",
             padding: 5,
-            borderThickness: 4,
-            cornerRadius: 8,
-            borderColor: "#3763f4",
-            backgroundColor: "#27262e",
+            backgroundColor: "#27262e"
+        },
+        axisY: {
+                labelFontColor: "white"
         },
         charts: [{
             data: [{
@@ -52,38 +53,50 @@
             }
         }
     });
-
-    var dailyChart = new CanvasJS.StockChart("dailyChart", {
-        backgroundColor: "#27262e",
-        height: 600,
-        title: {
-            text: '@Html.Raw((string)(TempData["Title"]))',
-            fontSize: 30,
-            fontColor: "white",
-            padding: 5,
-            borderThickness: 4,
-            cornerRadius: 8,
-            borderColor: "#3763f4",
-            backgroundColor: "#27262e",
-        },
-        charts: [{
-            data: [{
-                xValueType: "dateTime",
-                type: "line",
-                dataPoints: dailyDataPoints
-            }]
-        }],
-        rangeSelector: {
-            buttons: [],
-            inputFields: {
-                enabled: false
-            }
-        }
-    });
-
     yearlyChart.render();
-    dailyChart.render();
+
+    function chartTab2() {
+        var dailyChart = new CanvasJS.StockChart("dailyChart", {
+            backgroundColor: "#27262e",
+            height: 600,
+            animationEnabled: true,
+            axisX: {
+                labelFontColor: "white"
+            },
+            axisY: {
+                labelFontColor: "white"
+            },
+            title: {
+                text: '@Html.Raw((string)(TempData["Title"]))',
+                fontSize: 30,
+                fontColor: "white",
+                padding: 5,
+                backgroundColor: "#27262e"
+            },
+            charts: [{
+                data: [{
+                    xValueType: "dateTime",
+                    type: "line",
+                    dataPoints: dailyDataPoints
+                }]
+            }],
+            rangeSelector: {
+                buttons: [],
+                inputFields: {
+                    enabled: false
+                }
+            }
+        });
+        dailyChart.render();
+    }
+    
+    // Nasłuchiwanie zmiany zakładki
+    $('#bs-tab2').on("shown.bs.tab", function () {
+        chartTab2();
+        $('#bs-tab2').off(); // to remove the binded event after the initial rendering
+    });
 }
+
 </script>
 
 <div class="container-fluid text-secondary" style="width:50%;">
@@ -96,27 +109,31 @@
     }
 </div>
 
+<style>
+    .chart-container {
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+
+<div style="height: 800px;">
 @if (TempData["Title"] != null)
 {
-    <div class="container-fluid text-secondary" style="width:90%;">
-        <ul class="nav nav-tabs" role="tablist">
-            <li class="nav-item" role="presentation"><a class="nav-link active" role="tab" data-bs-toggle="tab" href="#tab-1">Tab 1</a></li>
-            <li class="nav-item" role="presentation"><a class="nav-link" role="tab" data-bs-toggle="tab" href="#tab-2">Tab 2</a></li>
-        </ul>
-        <div class="tab-content">
-            <div id="tab-1" class="tab-pane active" role="tabpanel">
-                <div class="container-fluid text-secondary">
-                    <div id="yearlyChart">
-                    </div>
-                </div>
-            </div>
-            <div id="tab-2" class="tab-pane" role="tabpanel">
-                <div class="container-fluid text-secondary">
-                    <div id="dailyChart">
-                    </div>
-                </div>
-            </div>
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" role="tab" data-bs-toggle="tab" href="#tab1">Rok</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" role="tab" data-bs-toggle="tab" id="bs-tab2" href="#tab2">Dzień</a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div id="tab1" class="tab-pane active" role="tabpanel">
+            <div id="yearlyChart" class="chart-container"> </div>
+        </div>
+        <div id="tab2" class="tab-pane" role="tabpanel">
+            <div id="dailyChart" class="chart-container"> </div>
         </div>
     </div>
 }
-
+</div>

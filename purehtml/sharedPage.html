@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
-<html lang="pl">
+<!DOCTYPE html>
+<html class="h-100" lang="pl">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>TradingPWR</title>
+    <title>odzera</title>
     <link rel="stylesheet" href="~/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Amiko&amp;display=swap">
     <link rel="stylesheet" href="~/assets/css/animate.min.css">
@@ -14,18 +14,7 @@
     <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
     <script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.stock.min.js"></script>
 </head>
-<body>
-    @if (ViewBag.isHome == true)
-    {
-        <style>
-            body
-            {
-                background-image: url(assets/img/bgimage.png); 
-                background-size: cover;
-            }
-        </style>
-    }
-
+<body class="d-flex flex-column h-100">
     <nav class="navbar navbar-dark navbar-expand-md sticky-top bg-dark">
         <div class="container">
             <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" d-flex align-items-center>
@@ -44,34 +33,119 @@
                         <a class="nav-link active" asp-area=""  asp-controller="Stock" asp-action="Index">Stock</a>
                     </li>
                     
-                    @if (User.Identity != null && User.Identity.IsAuthenticated)
-                    {
                         <li class="nav-item" data-bss-hover-animate="pulse">
                                 <a class="nav-link active" asp-area="" asp-controller="Company" asp-action="Index">Companies</a>
                         </li>
-                    }
+                    
                 </ul>
-                @if (User.Identity != null && User.Identity.IsAuthenticated)
-                {
                     <a class="btn btn-primary" role="button" style="margin-right: 11px;" asp-area="" asp-controller="Account" asp-action="Logout">
                         Logout
                     </a>
-                }
-                else
-                {
-                    <a class="btn btn-primary" role="button" style="margin-right: 11px;" asp-area="" asp-controller="Account" asp-action="Login">
-                        Login
-                    </a>
-                    <a class="btn btn-primary" role="button" asp-area="" asp-controller="Account" asp-action="Register">
-                        Register
-                    </a>
-                }
+                
                 
             </div>
         </div>
     </nav>
 
-    @RenderBody()
+        <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+        <script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.stock.min.js"></script>
+        <script type="text/javascript">
+            window.onload = function () {
+            var jsonYearlyData = "[{\"ID_rekordu\":1,\"ID_firmy\":1,\"Cena\":222.2,\"Dzien\":\"2023-01-01T00:00:00\"},{\"ID_rekordu\":2,\"ID_firmy\":1,\"Cena\":223.7,\"Dzien\":\"2023-01-02T00:00:00\"}]";
+            var jsonDailyData = "[{\"ID_rekordu\":1,\"ID_firmy\":1,\"Cena\":222.2,\"Dzien\":\"2023-01-01T00:00:00\"},{\"ID_rekordu\":2,\"ID_firmy\":1,\"Cena\":223.7,\"Dzien\":\"2023-01-02T00:00:00\"}]";
+        
+            // Parsowanie danych z ciągu tekstowego JSON
+            var yearlyData = JSON.parse(jsonYearlyData);
+            var dailyData = JSON.parse(jsonDailyData);
+        
+            var yearlyDataPoints = [];
+            var dailyDataPoints = [];
+        
+            for (var i = 0; i < yearlyData.length; i++) {
+                yearlyDataPoints.push({ x: new Date(yearlyData[i].Dzien), y: Number(yearlyData[i].Cena) });
+            }
+        
+            for (var i = 0; i < dailyData.length; i++) {
+                dailyDataPoints.push({ x: new Date(dailyData[i].Dzien), y: Number(dailyData[i].Cena) });
+            }
+        
+            var yearlyChart = new CanvasJS.StockChart("yearlyChart", {
+                backgroundColor: "#27262e",
+                height: 600,
+                animationEnabled: true,
+                title: {
+                    text: '@Html.Raw((string)(TempData["Title"]))',
+                    fontSize: 30,
+                    fontColor: "white",
+                    padding: 5,
+                    borderThickness: 4,
+                    cornerRadius: 8,
+                    borderColor: "#3763f4",
+                    backgroundColor: "#27262e",
+                },
+                charts: [{
+                    data: [{
+                        xValueType: "dateTime",
+                        type: "line",
+                        dataPoints: yearlyDataPoints
+                    }]
+                }],
+                rangeSelector: {
+                    buttons: [],
+                    inputFields: {
+                        enabled: false
+                    }
+                }
+            });
+            yearlyChart.render();
+        
+            var dailyChart = new CanvasJS.StockChart("dailyChart", {
+                backgroundColor: "#27262e",
+                height: 600,
+                animationEnabled: true,
+                title: {
+                    text: '@Html.Raw((string)(TempData["Title"]))',
+                    fontSize: 30,
+                    fontColor: "white",
+                    padding: 5,
+                    borderThickness: 4,
+                    cornerRadius: 8,
+                    borderColor: "#3763f4",
+                    backgroundColor: "#27262e",
+                },
+                charts: [{
+                    data: [{
+                        xValueType: "dateTime",
+                        type: "line",
+                        dataPoints: dailyDataPoints
+                    }]
+                }],
+                rangeSelector: {
+                    buttons: [],
+                    inputFields: {
+                        enabled: false
+                    }
+                }
+            });
+            dailyChart.render();
+        }
+        </script>
+        
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item" role="presentation"><a class="nav-link active" role="tab" data-bs-toggle="tab" href="#tab-1">Tab 1</a></li>
+                <li class="nav-item" role="presentation"><a class="nav-link" role="tab" data-bs-toggle="tab" href="#tab-2">Tab 2</a></li>
+            </ul>
+            <div class="tab-content" style="display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start;">
+                <div id="tab-1" class="tab-pane active" role="tabpanel">
+                    <div id="yearlyChart" style="flex: 1; min-height: 0;"> </div>
+                </div>
+                <div id="tab-2" class="tab-pane" role="tabpanel">
+                    <div id="dailyChart" style="flex: 1; min-height: 0;"> </div>
+                </div>
+            </div>
+        
+        
+        
 
     <footer class="footer mt-auto bg-dark">
         <div class="container py-4 py-lg-5" style="height: 265.188px;">
@@ -106,6 +180,5 @@
     </footer>
     <script src="~/assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="~/assets/js/bs-init.js"></script>
-    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

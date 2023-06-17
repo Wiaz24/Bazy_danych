@@ -9,6 +9,7 @@ namespace Platformy_Programowania_1.Services.Interfaces
         Task<int> DeleteDaily(int? id);
         DailyData GetDailyById(int id);
         Task<IEnumerable<DailyData>> GetDailysByCompanyId(int id);
+        Task<List<YearlyData>> GetDailysAsYearlys(int id);
     }
 
 }

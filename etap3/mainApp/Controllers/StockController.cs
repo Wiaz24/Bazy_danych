@@ -29,7 +29,7 @@ namespace Platformy_Programowania_1.Controllers
         [HttpPost]
         public async Task<IActionResult> GetData(int ID_firmy)
         {
-            var dailyDatas = await _dailyService.GetDailysByCompanyId(ID_firmy);
+            var dailyDatas = await _dailyService.GetDailysAsYearlys(ID_firmy);
             var yearlyDatas = await _yearlyService.GetYearlysByCompanyId(ID_firmy);
             var company = _companyService.GetCompanyById(ID_firmy);
             string dailyDatasJson = JsonConvert.SerializeObject(dailyDatas);

@@ -45,5 +45,21 @@ namespace Platformy_Programowania_1.Services
                 .Where(h => h.ID_firmy == id)
                 .ToListAsync();
         }
+        public async Task<List<YearlyData>> GetDailysAsYearlys(int id)
+        {
+            List<YearlyData> yearlyData = new List<YearlyData>();
+            var dailys = await GetDailysByCompanyId(id);
+            foreach (var item in dailys)
+            {
+                YearlyData yearly = new YearlyData();
+                yearly.ID_firmy = item.ID_firmy;
+                yearly.ID_rekordu = item.ID_rekordu;
+                yearly.Cena = item.Cena;
+                yearly.Dzien = DateTime.Today;
+                yearly.Dzien = yearly.Dzien.Add(item.Godzina);
+                yearlyData.Add(yearly);
+            }
+            return yearlyData;
+        }
     }
 }

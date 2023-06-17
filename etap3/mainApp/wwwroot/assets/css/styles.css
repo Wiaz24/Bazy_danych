@@ -1,7 +1,10 @@
 body {
-  color: rgb(236,238,239);
-  font-family: Amiko, sans-serif;
-  background: #27262e;
+    color: rgb(236,238,239);
+    font-family: Amiko, sans-serif;
+    background: #27262e;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .navbar {
@@ -27,8 +30,5 @@ body {
 
 footer {
   background: #27262e;
-}
-
-div {
 }
 
