@@ -36,16 +36,25 @@
             padding: 5,
             backgroundColor: "#27262e"
         },
-        axisY: {
-                labelFontColor: "white"
-        },
+        
         charts: [{
+            axisY: {
+                labelFontColor: "white"
+            },
+            axisX: {
+                labelFontColor: "white"
+            },
             data: [{
                 xValueType: "dateTime",
                 type: "line",
                 dataPoints: yearlyDataPoints
             }]
         }],
+        navigator: {
+            axisX: {
+                labelFontColor: "white"
+            }
+        },
         rangeSelector: {
             buttons: [],
             inputFields: {
@@ -63,9 +72,6 @@
             axisX: {
                 labelFontColor: "white"
             },
-            axisY: {
-                labelFontColor: "white"
-            },
             title: {
                 text: '@Html.Raw((string)(TempData["Title"]))',
                 fontSize: 30,
@@ -74,12 +80,23 @@
                 backgroundColor: "#27262e"
             },
             charts: [{
+                axisY: {
+                    labelFontColor: "white"
+                },
+                axisX: {
+                    labelFontColor: "white"
+                },
                 data: [{
                     xValueType: "dateTime",
                     type: "line",
                     dataPoints: dailyDataPoints
                 }]
             }],
+            navigator: {
+                axisX: {
+                    labelFontColor: "white"
+                }
+            },
             rangeSelector: {
                 buttons: [],
                 inputFields: {
