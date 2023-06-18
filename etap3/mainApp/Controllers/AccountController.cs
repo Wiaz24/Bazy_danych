@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Platformy_Programowania_1.Models;
 using System.Security.Claims;
@@ -15,6 +16,15 @@ namespace Platformy_Programowania_1.Controllers
         {
             _userManager = userManager;
             _signInManager = signInManager;
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IActionResult Index()
+        {
+            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = _userManager.FindByIdAsync(userId).Result;
+            return View(user);
         }
 
         [HttpGet]
@@ -93,6 +103,30 @@ namespace Platformy_Programowania_1.Controllers
             // Dodaj nową rolę użytkownikowi
             await _userManager.AddToRoleAsync(user, "PremiumUser");
             return RedirectToAction("Index", "Home");
+        }
+        [HttpPost]
+        public async Task<IActionResult> Index(User model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.GetUserAsync(User);
+                if (user != null)
+                {
+                    user.UserName = model.UserName;
+                    user.PhoneNumber = model.PhoneNumber;
+                    user.Email = model.Email;
+
+                    var result = await _userManager.UpdateAsync(user);
+                    ViewBag.UpdateSucc = true;
+                    return View(model);
+                }
+                else
+                {
+                    return RedirectToAction("Login","Account");
+                }
+            }
+            ViewBag.UpdateSucc = false;
+            return View(model);
         }
     }
 }
