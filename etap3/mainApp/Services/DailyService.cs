@@ -77,7 +77,7 @@ namespace Platformy_Programowania_1.Services
             string name = comp_data.Nazwa_firmy.ToString();
 
             ProcessStartInfo start = new ProcessStartInfo();
-            start.FileName = "C:\\Users\\jacek\\Source\\Repos\\Bazy_danych\\etap3\\mainApp\\wwwroot\\scripts\\StockAPI.py";
+            start.FileName = "wwwroot\\scripts\\StockAPI.py";
             start.Arguments = string.Format("\"{0}\" \"{1}\" \"{2}\" \"{3}\"", name, DateTime.Now.ToString("yyyy'-'MM'-'dd"), true, true);
             start.UseShellExecute = false;// Do not use OS shell
             start.CreateNoWindow = true; // We don't need new window
@@ -92,8 +92,6 @@ namespace Platformy_Programowania_1.Services
                     result = reader.ReadToEnd();
                 }
             }
-
-
             New_Data.Cena = (float)Convert.ToDouble(result);
             New_Data.Godzina = DateTime.Now.TimeOfDay;
 
