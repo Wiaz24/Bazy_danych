@@ -114,7 +114,22 @@
 }
 
 </script>
-
+@if (TempData["NotEnoughStocks"] != null && (bool)TempData["NotEnoughStocks"] == true)
+{
+    <div id="fail" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+        <span><strong>You have not enough stocks</strong></span>
+    </div>
+    TempData["NotEnoughStocks"] = false;
+}
+@if (TempData["NotEnoughCash"] != null && (bool)TempData["NotEnoughCash"] == true)
+{
+    <div id="fail" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+        <span><strong>You have not enough cash</strong></span>
+    </div>
+    TempData["NotEnoughCash"] = false;
+}
 <div class="container">
     <div class="row">
         <div class="col-md-4">

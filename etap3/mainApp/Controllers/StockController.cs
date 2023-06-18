@@ -61,6 +61,7 @@ namespace Platformy_Programowania_1.Controllers
             var user = await _userManager.GetUserAsync(User);
             if (amount*price > user.Balance)
             {
+                TempData["NotEnoughCash"] = true;
                 return RedirectToAction("Index");
             }
             Order order = new Order();
@@ -86,6 +87,7 @@ namespace Platformy_Programowania_1.Controllers
             var numStocks = orders.Sum(x => x.Ilosc);
             if (amount > numStocks)
             {
+                TempData["NotEnoughStocks"] = true;
                 return RedirectToAction("Index");
             }
             Order order = new Order();
