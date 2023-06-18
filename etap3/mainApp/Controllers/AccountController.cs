@@ -68,10 +68,6 @@ namespace Platformy_Programowania_1.Controllers
                 return View(loginData);
             }
             var user = await _userManager.FindByEmailAsync(loginData.Email); //znaleziono poprawnie, jeśli nie to null
-            //if (!ModelState.IsValid)
-            //{
-            //    return View(loginData);
-            //}
             if (user == null)
             {
                 ViewBag.IncorrectEmail = true;
