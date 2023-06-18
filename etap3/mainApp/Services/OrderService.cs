@@ -16,7 +16,7 @@ namespace Platformy_Programowania_1.Services
         {
             _dbContext.Orders.Add(order);
             await _dbContext.SaveChangesAsync();
-            return order.Id;
+            return order.ID_zamowienia;
         }
         public async Task<int> UpdateOrder(Order order)
         {

@@ -6,13 +6,13 @@ namespace Platformy_Programowania_1.Models
     public class Order
     {
         [Key]
-        public int Id { get; set; }
-        [ForeignKey("Uzytkownicy")]
-        public string UserId { get; set; } = null!;
-        public float Price { get; set; }
-        public int Amount { get; set; }
-        [ForeignKey("Firmy")]
-        public int CompanyId { get; set; }
+        public int ID_zamowienia { get; set; }
+        [ForeignKey("aspnetusers")]
+        public string ID_uzytkownika { get; set; } = null!;
 
+        [ForeignKey("Companies")]
+        public int ID_firmy { get; set; }
+        public float Cena { get; set; }
+        public int Ilosc { get; set; }
     }
 }

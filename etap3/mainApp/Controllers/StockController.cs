@@ -17,15 +17,18 @@ namespace Platformy_Programowania_1.Controllers
         private readonly IDailyService _dailyService;
         private readonly IYearlyService _yearlyService;
         private readonly ICompanyService _companyService;
+        private readonly IOrderService _orderService;
         public StockController( ICompanyService companyService, 
                                 IDailyService dailyService, 
-                                IYearlyService yearlyService, 
+                                IYearlyService yearlyService,
+                                IOrderService orderService,
                                 UserManager<User> userManager)
         {
             _userManager = userManager;
             _dailyService = dailyService;
             _yearlyService = yearlyService; 
             _companyService = companyService;
+            _orderService = orderService;
         }
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -50,16 +53,26 @@ namespace Platformy_Programowania_1.Controllers
         [HttpPost]
         public async Task<IActionResult> Buy(int amount)
         {
-            List<DailyData> data = (List<DailyData>)await _dailyService.GetDailysByCompanyId((int)TempData["CompanyID"]);
+            int CompanyID = (int)TempData["CompanyID"];
+            List<DailyData> data = (List<DailyData>)await _dailyService.GetDailysByCompanyId(CompanyID);
             var price = data.Last().Cena;
-
             var user = await _userManager.GetUserAsync(User);
+            if (amount*price > user.Balance)
+            {
+                return RedirectToAction("Index");
+            }
+            Order order = new Order();
+            order.Ilosc= amount;
+            order.Cena= price;
+            order.ID_uzytkownika = user.Id;
+            order.ID_firmy = CompanyID;
+            await _orderService.CreateOrder(order);
             user.Balance -= amount*price;
             var result = await _userManager.UpdateAsync(user);
             return RedirectToAction("Index", "Account");
         }
         [HttpPost]
-        public IActionResult Sell(float amount)
+        public IActionResult Sell(int amount)
         {
             return RedirectToAction("Index", "Account");
         }
