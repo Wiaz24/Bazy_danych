@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
@@ -8,6 +9,7 @@ using System.Dynamic;
 
 namespace Platformy_Programowania_1.Controllers
 {
+    [Authorize]
     public class StockController : Controller
     {
         private readonly IDailyService _dailyService;

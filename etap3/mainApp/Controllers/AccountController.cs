@@ -20,10 +20,9 @@ namespace Platformy_Programowania_1.Controllers
 
         [HttpGet]
         [Authorize]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var user = _userManager.FindByIdAsync(userId).Result;
+            var user = await _userManager.GetUserAsync(User);
             return View(user);
         }
 
@@ -128,5 +127,22 @@ namespace Platformy_Programowania_1.Controllers
             ViewBag.UpdateSucc = false;
             return View(model);
         }
-    }
+        [HttpGet]
+        public IActionResult AddCredits()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddCredits(float amount)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.GetUserAsync(User);
+                user.Balance += amount;
+                var result = await _userManager.UpdateAsync(user);
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
+    } 
 }
