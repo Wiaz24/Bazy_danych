@@ -9,7 +9,8 @@ arguments = sys.argv
 start = str(arguments[1])
 hourly_interval = arguments[2]
 only_last = arguments[3]
-
+com_symbol="TSL"
+start = "2023-06-15"
 if hourly_interval:
     interval="1h"
 else:
@@ -28,9 +29,16 @@ match arguments[0]:
 df = yf.download(com_symbol, start = start, progress=False, interval=interval)
 close_vals = df["Close"]
 
+
+
 if only_last:
     return_val = close_vals[len(close_vals)-1]      #newest data
-    sys.stdout.write(str(return_val))
+    print(return_val)
+    #sys.stdout.write(str(return_val))
 else:
     for line in close_vals:                         #all data
-        sys.stdout.write(str(line))
+        print(line)
+        #sys.stdout.write(str(line))
+
+
+sys.stdout.flush()
