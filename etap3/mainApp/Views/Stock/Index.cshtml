@@ -1,0 +1,162 @@
+﻿@model List<Platformy_Programowania_1.Models.Company>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="https://cdn.canvasjs.com/canvasjs.stock.min.js"></script>
+@{
+    string yearlyData = (string)(TempData["YearlyData"]);
+    string dailyData = (string)(TempData["DailyData"]);
+}
+<script type="text/javascript">
+    window.onload = function () {
+    var jsonYearlyData = '@Html.Raw(yearlyData)';
+    var jsonDailyData = '@Html.Raw(dailyData)';
+
+    // Parsowanie danych z ciągu tekstowego JSON
+    var yearlyData = JSON.parse(jsonYearlyData);
+    var dailyData = JSON.parse(jsonDailyData);
+
+    var yearlyDataPoints = [];
+    var dailyDataPoints = [];
+
+    for (var i = 0; i < yearlyData.length; i++) {
+        yearlyDataPoints.push({ x: new Date(yearlyData[i].Dzien), y: Number(yearlyData[i].Cena) });
+    }
+
+    for (var i = 0; i < dailyData.length; i++) {
+        dailyDataPoints.push({ x: new Date(dailyData[i].Dzien), y: Number(dailyData[i].Cena) });
+    }
+
+    var dailyChart = new CanvasJS.StockChart("dailyChart", {
+        backgroundColor: "#27262e",
+        height: 600,
+        animationEnabled: true,
+        axisX: {
+            labelFontColor: "white"
+        },
+        title: {
+            text: '@Html.Raw((string)(TempData["Title"]))',
+            fontSize: 30,
+            fontColor: "white",
+            padding: 5,
+            backgroundColor: "#27262e"
+        },
+        charts: [{
+            axisY: {
+                labelFontColor: "white"
+            },
+            axisX: {
+                labelFontColor: "white"
+            },
+            data: [{
+                xValueType: "dateTime",
+                type: "line",
+                dataPoints: dailyDataPoints
+            }]
+        }],
+        navigator: {
+            axisX: {
+                labelFontColor: "white"
+            }
+        },
+        rangeSelector: {
+            buttons: [],
+            inputFields: {
+                enabled: false
+            }
+        }
+    });
+    dailyChart.render();
+    function chartTab2() {
+        var yearlyChart = new CanvasJS.StockChart("yearlyChart", {
+            backgroundColor: "#27262e",
+            height: 600,
+            animationEnabled: true,
+            title: {
+                text: '@Html.Raw((string)(TempData["Title"]))',
+                fontSize: 30,
+                fontColor: "white",
+                padding: 5,
+                backgroundColor: "#27262e"
+            },
+
+            charts: [{
+                axisY: {
+                    labelFontColor: "white"
+                },
+                axisX: {
+                    labelFontColor: "white"
+                },
+                data: [{
+                    xValueType: "dateTime",
+                    type: "line",
+                    dataPoints: yearlyDataPoints
+                }]
+            }],
+            navigator: {
+                axisX: {
+                    labelFontColor: "white"
+                }
+            },
+            rangeSelector: {
+                buttons: [],
+                inputFields: {
+                    enabled: false
+                }
+            }
+        });
+        yearlyChart.render();
+    }
+    
+    // Nasłuchiwanie zmiany zakładki
+    $('#bs-tab2').on("shown.bs.tab", function () {
+        chartTab2();
+        $('#bs-tab2').off(); // to remove the binded event after the initial rendering
+    });
+}
+
+</script>
+
+<div class="container-fluid text-secondary" style="width:50%;">
+    @using (Html.BeginForm("GetData", "Stock", FormMethod.Post))
+    {
+        @Html.DropDownList("ID_firmy", new SelectList(Model, "ID_firmy", "Nazwa_firmy"), "Wybierz firmę", new { @class = "form-control" })
+        <div class="col text-center">
+            <button class="btn btn-primary shadow" role="button" type="submit">Pobierz dane</button>
+        </div>
+    }
+</div>
+
+<style>
+    .chart-container {
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+
+<div style="height: 800px;">
+@if (TempData["Title"] != null)
+{
+    <ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" role="tab" data-bs-toggle="tab" href="#tab1">Dzień</a>
+        </li>
+        @if (this.User.IsInRole("PremiumUser") || this.User.IsInRole("Admin"))
+        {
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" role="tab" data-bs-toggle="tab" id="bs-tab2" href="#tab2">Rok</a>
+            </li>
+        }
+            
+    </ul>
+    <div class="tab-content">
+        <div id="tab1" class="tab-pane active" role="tabpanel">
+            <div id="dailyChart" class="chart-container"> </div>
+        </div>
+        @if (this.User.IsInRole("PremiumUser") || this.User.IsInRole("Admin"))
+        {
+        <div id="tab2" class="tab-pane" role="tabpanel">
+            <div id="yearlyChart" class="chart-container"> </div>
+        </div>
+        }
+    </div>
+}
+</div>

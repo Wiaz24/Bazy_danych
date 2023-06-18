@@ -1,0 +1,34 @@
+body {
+    color: rgb(236,238,239);
+    font-family: Amiko, sans-serif;
+    background: #27262e;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar {
+  background: #27262e;
+  font-family: Amiko, sans-serif;
+  color: rgb(244,245,247);
+  height: 70px;
+}
+
+.navbar-toggler {
+}
+
+#navcol-1 {
+}
+
+.nav-item {
+  font-family: Amiko, sans-serif;
+  font-size: 17px;
+}
+
+.btn {
+}
+
+footer {
+  background: #27262e;
+}
+

@@ -1,0 +1,39 @@
+@model IEnumerable<Platformy_Programowania_1.Models.Stock>
+
+@{
+    ViewData["Title"] = "Stock";
+}
+<div>
+    <div class="text-center">
+        <h1 class="display-4">Stock</h1>
+
+        @using (Html.BeginForm("CreateStock", "CompanyStock", FormMethod.Post))
+        {
+            @Html.TextBox("companyName")
+            <input type="submit" value="Add Stock" />
+        }
+
+    <table class="table table-bordered table-responsive table-hover" style="color: white">
+        <tr>  
+            <th>Company Name </th>  
+            <th>Price </th>  
+            <th>Change </th>  
+            <th>Change in %</th>  
+            <th>Previous Close</th>  
+            <th>Last Update UTC</th>  
+        </tr>  
+
+        @foreach(var stock in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => stock.Name)</td>
+                <td>@Html.DisplayFor(modelItem => stock.Price)</td>
+                <td>@Html.DisplayFor(modelItem => stock.Change)</td>
+                <td>@Html.DisplayFor(modelItem => stock.ChangePercent)</td>
+                <td>@Html.DisplayFor(modelItem => stock.PreviousClose)</td>
+                <td>@Html.DisplayFor(modelItem => stock.LastUpdateUtc)</td>
+            </tr>
+        }
+
+    </table>
+</div>
