@@ -28,14 +28,26 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
     options.SignIn.RequireConfirmedEmail = false;
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequiredLength = 5;
-}).AddEntityFrameworkStores<AppDbContext>();
+})
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<AppDbContext>();
 
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
+    var roles = new[] { "Guest", "StdUser", "PremiumUser", "Admin" };
+
+    foreach (var role in roles)
+    {
+        if (!await roleManager.RoleExistsAsync(role))
+        {
+            await roleManager.CreateAsync(new IdentityRole(role));
+        }
+    }
     try
     {
         // Get an instance of your context class and run any pending migrations
@@ -68,5 +80,6 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 
 app.Run();

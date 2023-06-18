@@ -44,7 +44,7 @@
                         <a class="nav-link active" asp-area=""  asp-controller="Stock" asp-action="Index">Stock</a>
                     </li>
                     
-                    @if (User.Identity != null && User.Identity.IsAuthenticated)
+                    @if (User.Identity != null && User.Identity.IsAuthenticated && this.User.IsInRole("Admin"))
                     {
                         <li class="nav-item" data-bss-hover-animate="pulse">
                                 <a class="nav-link active" asp-area="" asp-controller="Company" asp-action="Index">Companies</a>
@@ -56,6 +56,12 @@
                     <a class="btn btn-primary" role="button" style="margin-right: 11px;" asp-area="" asp-controller="Account" asp-action="Logout">
                         Logout
                     </a>
+                    @if (this.User.IsInRole("StdUser"))
+                    {
+                        <a class="btn btn-primary" role="button" style="margin-right: 11px;" asp-area="" asp-controller="Account" asp-action="UpgradeAccount">
+                            Upgrade
+                        </a>
+                    }
                 }
                 else
                 {

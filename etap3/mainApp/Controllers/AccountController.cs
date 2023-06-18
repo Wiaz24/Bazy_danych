@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Platformy_Programowania_1.Models;
+using System.Security.Claims;
 
 namespace Platformy_Programowania_1.Controllers
 {
@@ -26,6 +27,11 @@ namespace Platformy_Programowania_1.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public IActionResult UpgradeAccount()
+        {
+            return View();
+        }
         [HttpPost]
         public async Task<IActionResult> Register(Register registerData)
         {
@@ -42,7 +48,7 @@ namespace Platformy_Programowania_1.Controllers
             };
 
             await _userManager.CreateAsync(newUser, registerData.Password);
-
+            await _userManager.AddToRoleAsync(newUser, "StdUser");
             return RedirectToAction("Index", "Home");
         }
         [HttpPost]
@@ -73,6 +79,19 @@ namespace Platformy_Programowania_1.Controllers
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+        public async Task<IActionResult> GoPremium()
+        {
+            string? userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = _userManager.FindByIdAsync(userId).Result;
+
+            var currentRoles = await _userManager.GetRolesAsync(user);
+            
+            await _userManager.RemoveFromRolesAsync(user, currentRoles);
+
+            // Dodaj nową rolę użytkownikowi
+            await _userManager.AddToRoleAsync(user, "PremiumUser");
             return RedirectToAction("Index", "Home");
         }
     }

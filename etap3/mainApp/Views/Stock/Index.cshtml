@@ -25,10 +25,13 @@
         dailyDataPoints.push({ x: new Date(dailyData[i].Dzien), y: Number(dailyData[i].Cena) });
     }
 
-    var yearlyChart = new CanvasJS.StockChart("yearlyChart", {
+    var dailyChart = new CanvasJS.StockChart("dailyChart", {
         backgroundColor: "#27262e",
         height: 600,
         animationEnabled: true,
+        axisX: {
+            labelFontColor: "white"
+        },
         title: {
             text: '@Html.Raw((string)(TempData["Title"]))',
             fontSize: 30,
@@ -36,7 +39,6 @@
             padding: 5,
             backgroundColor: "#27262e"
         },
-        
         charts: [{
             axisY: {
                 labelFontColor: "white"
@@ -47,7 +49,7 @@
             data: [{
                 xValueType: "dateTime",
                 type: "line",
-                dataPoints: yearlyDataPoints
+                dataPoints: dailyDataPoints
             }]
         }],
         navigator: {
@@ -62,16 +64,12 @@
             }
         }
     });
-    yearlyChart.render();
-
+    dailyChart.render();
     function chartTab2() {
-        var dailyChart = new CanvasJS.StockChart("dailyChart", {
+        var yearlyChart = new CanvasJS.StockChart("yearlyChart", {
             backgroundColor: "#27262e",
             height: 600,
             animationEnabled: true,
-            axisX: {
-                labelFontColor: "white"
-            },
             title: {
                 text: '@Html.Raw((string)(TempData["Title"]))',
                 fontSize: 30,
@@ -79,6 +77,7 @@
                 padding: 5,
                 backgroundColor: "#27262e"
             },
+
             charts: [{
                 axisY: {
                     labelFontColor: "white"
@@ -89,7 +88,7 @@
                 data: [{
                     xValueType: "dateTime",
                     type: "line",
-                    dataPoints: dailyDataPoints
+                    dataPoints: yearlyDataPoints
                 }]
             }],
             navigator: {
@@ -104,7 +103,7 @@
                 }
             }
         });
-        dailyChart.render();
+        yearlyChart.render();
     }
     
     // Nasłuchiwanie zmiany zakładki
@@ -138,19 +137,26 @@
 {
     <ul class="nav nav-tabs" role="tablist">
         <li class="nav-item" role="presentation">
-            <a class="nav-link active" role="tab" data-bs-toggle="tab" href="#tab1">Rok</a>
+            <a class="nav-link active" role="tab" data-bs-toggle="tab" href="#tab1">Dzień</a>
         </li>
-        <li class="nav-item" role="presentation">
-            <a class="nav-link" role="tab" data-bs-toggle="tab" id="bs-tab2" href="#tab2">Dzień</a>
-        </li>
+        @if (this.User.IsInRole("PremiumUser") || this.User.IsInRole("Admin"))
+        {
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" role="tab" data-bs-toggle="tab" id="bs-tab2" href="#tab2">Rok</a>
+            </li>
+        }
+            
     </ul>
     <div class="tab-content">
         <div id="tab1" class="tab-pane active" role="tabpanel">
-            <div id="yearlyChart" class="chart-container"> </div>
-        </div>
-        <div id="tab2" class="tab-pane" role="tabpanel">
             <div id="dailyChart" class="chart-container"> </div>
         </div>
+        @if (this.User.IsInRole("PremiumUser") || this.User.IsInRole("Admin"))
+        {
+        <div id="tab2" class="tab-pane" role="tabpanel">
+            <div id="yearlyChart" class="chart-container"> </div>
+        </div>
+        }
     </div>
 }
 </div>
