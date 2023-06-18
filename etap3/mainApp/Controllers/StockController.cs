@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Platformy_Programowania_1.Models;
 using Platformy_Programowania_1.Services.Interfaces;
 using System.Dynamic;
+using System.Linq;
 
 namespace Platformy_Programowania_1.Controllers
 {
@@ -39,7 +40,7 @@ namespace Platformy_Programowania_1.Controllers
         [HttpPost]
         public async Task<IActionResult> GetData(int ID_firmy)
         {
-            await _dailyService.New_Daily(ID_firmy);
+            //await _dailyService.New_Daily(ID_firmy);
             var dailyDatas = await _dailyService.GetDailysAsYearlys(ID_firmy);
             var yearlyDatas = await _yearlyService.GetYearlysByCompanyId(ID_firmy);
             var company = _companyService.GetCompanyById(ID_firmy);
@@ -73,8 +74,28 @@ namespace Platformy_Programowania_1.Controllers
             return RedirectToAction("Index", "Account");
         }
         [HttpPost]
-        public IActionResult Sell(int amount)
+        public async Task<IActionResult> Sell(int amount)
         {
+            int CompanyID = (int)TempData["CompanyID"];
+            List<DailyData> dailys = (List<DailyData>)await _dailyService.GetDailysByCompanyId(CompanyID);
+            var price = dailys.Last().Cena;
+            var user = await _userManager.GetUserAsync(User);
+
+            List<Order> orders = await _orderService.GetOrdersByUserId(user.Id);
+            var companyOrders = orders.Where(x => x.ID_firmy == CompanyID);
+            var numStocks = orders.Sum(x => x.Ilosc);
+            if (amount > numStocks)
+            {
+                return RedirectToAction("Index");
+            }
+            Order order = new Order();
+            order.Ilosc = -1*amount;
+            order.Cena = price;
+            order.ID_uzytkownika = user.Id;
+            order.ID_firmy = CompanyID;
+            await _orderService.CreateOrder(order);
+            user.Balance += amount * price;
+            var result = await _userManager.UpdateAsync(user);
             return RedirectToAction("Index", "Account");
         }
     }

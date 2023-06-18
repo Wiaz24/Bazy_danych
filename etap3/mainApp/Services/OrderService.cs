@@ -39,6 +39,12 @@ namespace Platformy_Programowania_1.Services
         {
             return _dbContext.Orders.Find(id);
         }
+        public async Task<List<Order>> GetOrdersByUserId(string id)
+        {
+            return await _dbContext.Orders
+                .Where(h => h.ID_uzytkownika == id)
+                .ToListAsync();
+        }
         public async Task<IEnumerable<Order>> GetOrders()
         {
             return await _dbContext.Orders.ToListAsync();

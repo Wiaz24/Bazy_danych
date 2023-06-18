@@ -9,5 +9,6 @@ namespace Platformy_Programowania_1.Services.Interfaces
         Task<int> DeleteOrder(int? id);
         Order GetOrderById(int id);
         Task<IEnumerable<Order>> GetOrders();
+        Task<List<Order>> GetOrdersByUserId(string id);
     }
 }
