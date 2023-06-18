@@ -10,6 +10,7 @@ namespace Platformy_Programowania_1.Services.Interfaces
         DailyData GetDailyById(int id);
         Task<IEnumerable<DailyData>> GetDailysByCompanyId(int id);
         Task<List<YearlyData>> GetDailysAsYearlys(int id);
+        Task<int> New_Daily(int company_id);
     }
 
 }
