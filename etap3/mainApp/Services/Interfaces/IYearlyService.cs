@@ -9,5 +9,7 @@ namespace Bazy_danych.Services.Interfaces
         Task<int> DeleteYearly(int? id);
         YearlyData GetYearlyById(int id);
         Task<IEnumerable<YearlyData>> GetYearlysByCompanyId(int id);
+        Task<int> New_Yearly(int company_id);
+
     }
 }
