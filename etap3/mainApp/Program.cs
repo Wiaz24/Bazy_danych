@@ -1,8 +1,8 @@
-using Platformy_Programowania_1;
+using Bazy_danych;
 using Microsoft.EntityFrameworkCore;
-using Platformy_Programowania_1.Services.Interfaces;
-using Platformy_Programowania_1.Services;
-using Platformy_Programowania_1.Models;
+using Bazy_danych.Services.Interfaces;
+using Bazy_danych.Services;
+using Bazy_danych.Models;
 using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);

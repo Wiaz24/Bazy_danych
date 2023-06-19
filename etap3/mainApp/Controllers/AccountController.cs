@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Platformy_Programowania_1.Models;
+using Bazy_danych.Models;
 using System.Security.Claims;
 
-namespace Platformy_Programowania_1.Controllers
+namespace Bazy_danych.Controllers
 {
     public class AccountController : Controller
     {

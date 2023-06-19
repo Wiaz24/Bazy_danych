@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MySqlX.XDevAPI.Common;
-using Platformy_Programowania_1.Models;
-using Platformy_Programowania_1.Services.Interfaces;
+using Bazy_danych.Models;
+using Bazy_danych.Services.Interfaces;
 using System.Diagnostics;
 
-namespace Platformy_Programowania_1.Services
+namespace Bazy_danych.Services
 {
     public class DailyService : IDailyService
     {
@@ -13,7 +13,6 @@ namespace Platformy_Programowania_1.Services
         {
             _dbContext = dbContext;
         }
-
         public async Task<int> CreateDaily(DailyData daily)
         {
             _dbContext.Daily.Add(daily);

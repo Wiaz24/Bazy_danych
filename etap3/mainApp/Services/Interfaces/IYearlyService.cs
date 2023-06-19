@@ -1,6 +1,6 @@
-﻿using Platformy_Programowania_1.Models;
+﻿using Bazy_danych.Models;
 
-namespace Platformy_Programowania_1.Services.Interfaces
+namespace Bazy_danych.Services.Interfaces
 {
     public interface IYearlyService
     {

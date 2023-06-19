@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Platformy_Programowania_1.Models
+namespace Bazy_danych.Models
 {
     public class DailyData
     {

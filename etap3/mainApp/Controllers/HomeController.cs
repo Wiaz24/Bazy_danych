@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Platformy_Programowania_1.Models;
-using Platformy_Programowania_1.Services.Interfaces;
+using Bazy_danych.Models;
+using Bazy_danych.Services.Interfaces;
 
-namespace Platformy_Programowania_1.Controllers;
+namespace Bazy_danych.Controllers;
 
 public class HomeController : Controller
 {
@@ -16,18 +16,6 @@ public class HomeController : Controller
     public IActionResult Index()
     {
         ViewBag.isHome = true;
-        return View();
-    }
-    public IActionResult Login()
-    {
-        return View();
-    }
-    public IActionResult Register()
-    {
-        return View();
-    }
-    public IActionResult Privacy()
-    {
         return View();
     }
 

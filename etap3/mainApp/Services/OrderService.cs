@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Platformy_Programowania_1.Models;
-using Platformy_Programowania_1.Services.Interfaces;
+using Bazy_danych.Models;
+using Bazy_danych.Services.Interfaces;
 
-namespace Platformy_Programowania_1.Services
+namespace Bazy_danych.Services
 {
     public class OrderService : IOrderService
     {

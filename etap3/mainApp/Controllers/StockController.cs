@@ -4,12 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
-using Platformy_Programowania_1.Models;
-using Platformy_Programowania_1.Services.Interfaces;
+using Bazy_danych.Models;
+using Bazy_danych.Services.Interfaces;
 using System.Dynamic;
 using System.Linq;
 
-namespace Platformy_Programowania_1.Controllers
+namespace Bazy_danych.Controllers
 {
     [Authorize]
     public class StockController : Controller

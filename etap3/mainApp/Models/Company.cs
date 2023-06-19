@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Platformy_Programowania_1.Models
+namespace Bazy_danych.Models
 {
     public class Company
     {

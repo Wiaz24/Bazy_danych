@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Moq;
-using Platformy_Programowania_1.Controllers;
-using Platformy_Programowania_1.Models;
+using Bazy_danych.Controllers;
+using Bazy_danych.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -157,7 +157,6 @@ namespace TestPlatformy
             var incorrectRegister = new Register
             {
                 FirstName = "John",
-                LastName = "Smith",
                 Email = string.Empty,
                 Password = "MyPasswd123#",
                 PhoneNumber = "123456789"
@@ -179,7 +178,6 @@ namespace TestPlatformy
             var correctRegister = new Register
             {
                 FirstName = "John",
-                LastName = "Smith",
                 Email = "smith@wp.pl",
                 Password = "MyPasswd123#",
                 PhoneNumber = "123456789"
