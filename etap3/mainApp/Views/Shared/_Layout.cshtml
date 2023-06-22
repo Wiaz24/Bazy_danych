@@ -44,11 +44,20 @@
                         <a class="nav-link active" asp-area=""  asp-controller="Stock" asp-action="Index">Stock</a>
                     </li>
                     
-                    @if (User.Identity != null && User.Identity.IsAuthenticated && this.User.IsInRole("Admin"))
+                    @if (User.Identity != null && User.Identity.IsAuthenticated)
                     {
-                        <li class="nav-item" data-bss-hover-animate="pulse">
+                        if (this.User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item" data-bss-hover-animate="pulse">
                                 <a class="nav-link active" asp-area="" asp-controller="Company" asp-action="Index">Companies</a>
-                        </li>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item" data-bss-hover-animate="pulse">
+                                <a class="nav-link active" asp-area="" asp-controller="Account" asp-action="Index">Account</a>
+                            </li>
+                        }
                     }
                 </ul>
                 @if (User.Identity != null && User.Identity.IsAuthenticated)
@@ -62,6 +71,7 @@
                             Upgrade
                         </a>
                     }
+
                 }
                 else
                 {

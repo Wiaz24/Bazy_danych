@@ -1,6 +1,6 @@
-﻿using Platformy_Programowania_1.Models;
+﻿using Bazy_danych.Models;
 
-namespace Platformy_Programowania_1.Services.Interfaces
+namespace Bazy_danych.Services.Interfaces
 {
     public interface IYearlyService
     {
@@ -9,5 +9,7 @@ namespace Platformy_Programowania_1.Services.Interfaces
         Task<int> DeleteYearly(int? id);
         YearlyData GetYearlyById(int id);
         Task<IEnumerable<YearlyData>> GetYearlysByCompanyId(int id);
+        Task<int> New_Yearly(int company_id);
+
     }
 }

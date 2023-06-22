@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Platformy_Programowania_1.Models;
-using Platformy_Programowania_1.Services.Interfaces;
+using Bazy_danych.Models;
+using Bazy_danych.Services.Interfaces;
 
-namespace Platformy_Programowania_1.Services
+namespace Bazy_danych.Services
 {
     public class OrderService : IOrderService
     {
@@ -16,7 +16,7 @@ namespace Platformy_Programowania_1.Services
         {
             _dbContext.Orders.Add(order);
             await _dbContext.SaveChangesAsync();
-            return order.Id;
+            return order.ID_zamowienia;
         }
         public async Task<int> UpdateOrder(Order order)
         {
@@ -38,6 +38,12 @@ namespace Platformy_Programowania_1.Services
         public Order GetOrderById(int id)
         {
             return _dbContext.Orders.Find(id);
+        }
+        public async Task<List<Order>> GetOrdersByUserId(string id)
+        {
+            return await _dbContext.Orders
+                .Where(h => h.ID_uzytkownika == id)
+                .ToListAsync();
         }
         public async Task<IEnumerable<Order>> GetOrders()
         {

@@ -1,12 +1,12 @@
 ﻿using Org.BouncyCastle.Crypto.Digests;
-using Platformy_Programowania_1.Models;
-using Platformy_Programowania_1.Services.Interfaces;
+using Bazy_danych.Models;
+using Bazy_danych.Services.Interfaces;
 using System.Runtime.Intrinsics.Arm;
 using System.Security.Cryptography;
 using System.Text;
 using static System.Net.Mime.MediaTypeNames;
 
-namespace Platformy_Programowania_1.Services
+namespace Bazy_danych.Services
 {
     public class UserService : IUserService
     {

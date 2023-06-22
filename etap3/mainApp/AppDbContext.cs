@@ -1,16 +1,15 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Bcpg;
-using Platformy_Programowania_1.Models;
+using Bazy_danych.Models;
 using System.Reflection.Emit;
 
 
-namespace Platformy_Programowania_1
+namespace Bazy_danych
 {
     public class AppDbContext : IdentityDbContext<User>
     {
         public DbSet<User> Users { get; set; }
-        //public DbSet<Stock> Stocks { get; set; }
         public DbSet<Company> Companies { get; set; }
         public DbSet<DailyData> Daily { get; set; }
         public DbSet<YearlyData> Yearly { get; set; }

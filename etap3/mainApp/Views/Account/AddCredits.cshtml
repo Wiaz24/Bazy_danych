@@ -1,0 +1,26 @@
+﻿@model Double
+<section class="py-4 py-xl-5">
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-md-8 col-xl-6 text-center mx-auto">
+                <h2>Add credits to your account</h2>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-6 col-xl-4">
+                <div class="card mb-5" style="background: #27262e;">
+                    <div class="card-body d-flex flex-column align-items-center">
+                        @using (Html.BeginForm("AddCredits", "Account", FormMethod.Post))
+                        {
+                            <div class="mb-3">
+                                <input type="number" class="form-control" name="amount" step="100" />
+                            </div>
+                            <div class="mb-3"><button class="btn btn-primary d-block w-100" type="submit">Add credits</button></div>
+                            <p class="text-muted"></p>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

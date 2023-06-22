@@ -1,0 +1,121 @@
+﻿@model User
+<div class="container-fluid">
+    <h3 class="text-dark mb-4">Profile</h3>
+    <div class="row mb-3">
+        <div class="col-lg-4">
+            <div class="card shadow mb-4">
+                
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="row mb-3 d-none">
+                <div class="col">
+                    <div class="card bg-dark border-dark">
+                        <div class="card-body">
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <p class="m-0">Peformance</p>
+                                    <p class="m-0"><strong>65.2%</strong></p>
+                                </div>
+                                <div class="col-auto"><i class="fas fa-rocket fa-2x"></i></div>
+                            </div>
+                            <p class="text-white-50 small m-0"><i class="fas fa-arrow-up"></i> 5% since last month</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card bg-dark border-dark">
+                        <div class="card-body">
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <p class="m-0">Peformance</p>
+                                    <p class="m-0"><strong>65.2%</strong></p>
+                                </div>
+                                <div class="col-auto"><i class="fas fa-rocket fa-2x"></i></div>
+                            </div>
+                            <p class="text-white-50 small m-0"><i class="fas fa-arrow-up"></i> 5% since last month</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    @if (ViewBag.UpdateSucc != null && ViewBag.UpdateSucc == true)
+                    {
+                        <div id="success" class="alert alert-success alert-dismissible fade show" role="alert">
+                            <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <span><strong>Update successful</strong></span>
+                        </div>
+                    }
+                    @if (ViewBag.UpdateSucc != null && ViewBag.UpdateSucc == false)
+                    {
+                        <div id="success" class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <span><strong>Update failed</strong></span>
+                        </div>
+                    }
+                    <div class="card bg-dark border-dark">
+                        <div class="card-header py-3">
+                            <p class="text-primary m-0 fw-bold">User Settings</p>
+                        </div>
+                        <div class="card-body">
+                            @using (Html.BeginForm("Index", "Account", FormMethod.Post))
+                            {
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="first_name"><strong>Username</strong></label>
+                                            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control"})
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="username"><strong>Phone number</strong></label>
+                                            @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control"})
+                                        </div>
+                                    </div>  
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3">
+                                            <label class="form-label" for="email"><strong>Email</strong></label>
+                                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <button class="btn btn-primary btn-sm" type="submit">Save Settings</button>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="card bg-dark border-dark">
+                        <div class="card-header py-3">
+                            <p class="text-primary m-0 fw-bold">Account info</p>
+                        </div>
+                            <div class="col-md-6 col-xl-3 mb-4">
+                                <div class="card shadow border-start-primary py-2">
+                                    <div class="card-body">
+                                        <div class="row align-items-center no-gutters">
+                                            <div class="col me-2">
+                                                <div class="text-uppercase text-primary fw-bold text-xs mb-1"><span>Balance</span></div>
+                                                <div class="text-dark fw-bold h5 mb-0"><span>$@Model.Balance</span></div>
+                                            </div>
+                                            <div class="col-auto">
+                                            <div class="mb-3">
+                                                <a class="btn btn-primary" role="button" style="margin-top: 11px;" asp-area="" asp-controller="Account" asp-action="AddCredits">
+                                                    Add credits
+                                                </a>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

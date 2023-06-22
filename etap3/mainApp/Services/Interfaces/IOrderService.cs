@@ -1,6 +1,6 @@
-﻿using Platformy_Programowania_1.Models;
+﻿using Bazy_danych.Models;
 
-namespace Platformy_Programowania_1.Services.Interfaces
+namespace Bazy_danych.Services.Interfaces
 {
     public interface IOrderService
     {
@@ -9,5 +9,6 @@ namespace Platformy_Programowania_1.Services.Interfaces
         Task<int> DeleteOrder(int? id);
         Order GetOrderById(int id);
         Task<IEnumerable<Order>> GetOrders();
+        Task<List<Order>> GetOrdersByUserId(string id);
     }
 }

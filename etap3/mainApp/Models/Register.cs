@@ -1,13 +1,11 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Platformy_Programowania_1.Models
+namespace Bazy_danych.Models
 {
     public class Register
     {
         [Required]
         public string FirstName { get; set; } = null!;
-        [Required]
-        public string LastName { get; set; } = null!;
         [Required]
         [EmailAddress]
         public string Email { get; set; } = null!;

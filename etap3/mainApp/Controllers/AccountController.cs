@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Platformy_Programowania_1.Models;
+using Bazy_danych.Models;
 using System.Security.Claims;
 
-namespace Platformy_Programowania_1.Controllers
+namespace Bazy_danych.Controllers
 {
     public class AccountController : Controller
     {
@@ -15,6 +16,14 @@ namespace Platformy_Programowania_1.Controllers
         {
             _userManager = userManager;
             _signInManager = signInManager;
+        }
+
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> Index()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            return View(user);
         }
 
         [HttpGet]
@@ -59,10 +68,6 @@ namespace Platformy_Programowania_1.Controllers
                 return View(loginData);
             }
             var user = await _userManager.FindByEmailAsync(loginData.Email); //znaleziono poprawnie, jeśli nie to null
-            //if (!ModelState.IsValid)
-            //{
-            //    return View(loginData);
-            //}
             if (user == null)
             {
                 ViewBag.IncorrectEmail = true;
@@ -94,5 +99,46 @@ namespace Platformy_Programowania_1.Controllers
             await _userManager.AddToRoleAsync(user, "PremiumUser");
             return RedirectToAction("Index", "Home");
         }
-    }
+        [HttpPost]
+        public async Task<IActionResult> Index(User model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.GetUserAsync(User);
+                if (user != null)
+                {
+                    user.UserName = model.UserName;
+                    user.PhoneNumber = model.PhoneNumber;
+                    user.Email = model.Email;
+
+                    var result = await _userManager.UpdateAsync(user);
+                    ViewBag.UpdateSucc = true;
+                    return View(model);
+                }
+                else
+                {
+                    return RedirectToAction("Login","Account");
+                }
+            }
+            ViewBag.UpdateSucc = false;
+            return View(model);
+        }
+        [HttpGet]
+        public IActionResult AddCredits()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddCredits(float amount)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.GetUserAsync(User);
+                user.Balance += amount;
+                var result = await _userManager.UpdateAsync(user);
+                return RedirectToAction("Index");
+            }
+            return View();
+        }
+    } 
 }

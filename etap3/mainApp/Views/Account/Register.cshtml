@@ -1,4 +1,4 @@
-﻿@model Platformy_Programowania_1.Models.Register
+﻿@model Bazy_danych.Models.Register
 <section class="py-4 py-xl-5">
     <div class="container">
         <div class="row mb-5">
@@ -19,7 +19,6 @@
                         <form class="text-center" method="post">
                             @Html.ValidationSummary()
                             <div class="mb-3">@Html.TextBoxFor(x => x.FirstName, new { @class = "form-control", @placeholder="First name" })</div>
-                            <div class="mb-3">@Html.TextBoxFor(x => x.LastName, new { @class = "form-control", @placeholder="Last name" })</div>
                             <div class="mb-3">@Html.TextBoxFor(x => x.PhoneNumber, new { @class = "form-control", @placeholder="Phone number" })</div>
                             <div class="mb-3">@Html.TextBoxFor(x => x.Email, new { @class = "form-control", @placeholder="Email" })</div>
                             <div class="mb-3">@Html.PasswordFor(x => x.Password, new { @class = "form-control", @placeholder="Password" })</div>

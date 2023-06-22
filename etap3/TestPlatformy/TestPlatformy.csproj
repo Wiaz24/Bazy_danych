@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\mainApp\Platformy-Programowania-1.csproj" />
+    <ProjectReference Include="..\mainApp\Bazy_danych.csproj" />
   </ItemGroup>
 
 </Project>

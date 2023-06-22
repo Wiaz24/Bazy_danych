@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Platformy_Programowania_1.Models;
+using Bazy_danych.Models;
 using System.Collections.Generic;
-using Platformy_Programowania_1.Services.Interfaces;
-using Platformy_Programowania_1.Services;
+using Bazy_danych.Services.Interfaces;
+using Bazy_danych.Services;
 
-namespace Platformy_Programowania_1.Controllers
+namespace Bazy_danych.Controllers
 {
     public class CompanyController : Controller
     {
